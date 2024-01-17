@@ -1,8 +1,11 @@
 import { useState } from "react";
 import Category from "../Category";
 import SideNavbar from "../SideNavbar";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
+    let navigate = useNavigate();
+
     let [sideNavbar, setSideNavbar] = useState(true);
     let [searchBar, setSearchBar] = useState(true);
     return (
@@ -66,7 +69,7 @@ export default function Navbar() {
                             </g>
                         </svg>
                     </div>
-                    <div className="h-8 w-8 cursor-pointer overflow-hidden rounded-full transition-all hover:bg-gray-200 hover:p-0.5">
+                    <div onClick={()=>{navigate('/signin')}} className="h-8 w-8 cursor-pointer overflow-hidden rounded-full transition-all hover:bg-gray-200 hover:p-0.5">
                         <img className="rounded-full" src="https://i.pravatar.cc/300" alt="" />
                     </div>
                 </div>

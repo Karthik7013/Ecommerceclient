@@ -1,253 +1,61 @@
 /* eslint-disable react/prop-types */
-
+import {useEffect,useState} from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Category({ searchBar, setSearchBar }) {
+let navigate = useNavigate();
+let [category,setCategory] = useState("men's clothing");
+let [products,setProducts] = useState()
+   async function getproducts(category){
+let res = await axios.get(`https://myshopee-ba54.onrender.com/products/category/${category}`);
+setProducts(res.data)
+    }
+    useEffect(()=>{
+        getproducts(category)
+    },[category])
+
+    function handleCategory(category){
+        setCategory(category)
+    }
 
     return (
         <div className={`${searchBar ? 'hidden' : 'flex'} justify-center items-center p-4 bg-[#292929b0] fixed top-0 w-screen z-50 h-screen`}>
             <div className="relative max-w-xl mx-auto py-4 px-2 bg-white rounded-md rounded-tr-none shadow">
                 <div className="bg-white shadow mx-auto rounded-lg grid grid-cols-2 sm:grid-cols-5 text-black p-2 gap-x-4">
-                    <div className="cursor-pointer flex justify-center items-center flex-col py-2 bg-blue-100 rounded-md">
+                    <div onClick={()=>{handleCategory("men's clothing")}} className={`cursor-pointer flex justify-center items-center flex-col py-2  rounded-md ${category === "men's clothing" ? "bg-blue-100":""}`}>
                         <div className="w-10 h-10"> <img src="https://ik.imagekit.io/ybyfbcvb8/mens.png?updatedAt=1705054358178" alt="" /></div>
                         <div>Mens</div>
                     </div>
-                    <div className="rounded-md cursor-pointer flex justify-center items-center flex-col py-2">
+                    <div onClick={()=>{handleCategory("women's clothing")}} className={`cursor-pointer flex justify-center items-center flex-col py-2  rounded-md ${category === "women's clothing" ? "bg-blue-100":""}`}>
                         <div className="w-10 h-10"> <img src="https://ik.imagekit.io/ybyfbcvb8/woman.png?updatedAt=1705054358108" alt="" /></div>
                         <div>Womens</div>
                     </div>
-                    <div className="rounded-md cursor-pointer flex justify-center items-center flex-col py-2">
+                    <div onClick={()=>{handleCategory('jewelery')}} className={`cursor-pointer flex justify-center items-center flex-col py-2  rounded-md ${category === "jewelery" ? "bg-blue-100":""}`}>
                         <div className="w-10 h-10"> <img src="https://ik.imagekit.io/ybyfbcvb8/son.png?updatedAt=1705054358145" alt="" /></div>
                         <div>kids</div>
                     </div>
-                    <div className="rounded-md cursor-pointer flex justify-center items-center flex-col py-2">
+                    <div onClick={()=>{handleCategory('electronics')}} className={`cursor-pointer flex justify-center items-center flex-col py-2  rounded-md ${category === "electronics" ? "bg-blue-100":""}`}>
                         <div className="w-10 h-10"> <img src="https://ik.imagekit.io/ybyfbcvb8/electronics.png?updatedAt=1705054358149" alt="" /></div>
                         <div>Electronics</div>
                     </div>
                     <div className="rounded-md cursor-pointer flex justify-center items-center flex-col py-2">
-                        <div className="w-10 h-10"> <img src="https://ik.imagekit.io/ybyfbcvb8/boxes.png?updatedAt=1705054358175" alt="" /></div>
+                        <div className="w-10 h-10"><img src="https://ik.imagekit.io/ybyfbcvb8/boxes.png?updatedAt=1705054358175" alt="" /></div>
                         <div>Others</div>
                     </div>
                 </div>
                 <ul className="overflow-y-scroll max-h-[400px] text-black  mt-4 mx-auto rounded-lg grid grid-cols-1 gap-2 sm:grid-cols-2">
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
+                    {products !== undefined ? products.map((e,index)=>
+                        <li onClick={()=>{navigate(`/product-details/${e._id}`)}} key={index} className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md shadow border">
+                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src={e.image} alt="" /></div>
                         <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
+                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor </p>
+                            <p className="text-ellipsis overflow-hidden">Price : ${e.price}</p>
                         </div>
                     </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
+                    ):""}
+                
 
-
-
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
-                    <li className="hover:bg-blue-100 cursor-pointer flex items-center gap-x-2 py-2 px-3 rounded-md bg-blue-100">
-                        <div className="w-16 bg-green-400 rounded-md overflow-hidden"><img src="https://images.unsplash.com/photo-1495615080073-6b89c9839ce0?q=80&w=2048&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" /></div>
-                        <div className="overflow-hidden w-full text-nowrap">
-                            <p className="text-ellipsis overflow-hidden">Lorem ipsum dolor sit amet, cons laborum distinctio
-                                suscipit magni ex, porro officiis ad debitis recusandae. Perspiciatis fugiat et eius
-                                asperiores debitis commodi impedit minima consequuntur repellat! Impedit.</p>
-                            <p className="text-ellipsis overflow-hidden">Price : 500$</p>
-                        </div>
-                    </li>
 
 
                 </ul>

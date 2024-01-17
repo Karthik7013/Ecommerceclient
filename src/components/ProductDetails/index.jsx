@@ -98,7 +98,7 @@ export default function ProductDetails() {
                                         +
                                     </div>
                                 </div>
-                                <div className="flex cursor-pointer items-center justify-center rounded-full border bg-pink-600 text-white px-4">
+                                <div className="flex cursor-pointer items-center justify-center rounded-full border bg-pink-600 text-white px-4 hover:bg-pink-700">
                                     <div className="flex items-center gap-x-1">
                                         <svg
                                             fill="#fff"
@@ -201,7 +201,7 @@ export default function ProductDetails() {
                             </li>
                         </ul>
                         <div className="mt-6 pb-6 flex gap-x-6">
-                            <button onClick={() => { navigate('/checkout') }} className="flex text-center gap-x-2 items-center justify-center text-blue-600 w-full  cursor-pointer rounded border-blue-600 border  px-5 py-2 font-bold ">
+                            <button onClick={() => { navigate('/checkout') }} className="hover:bg-blue-100 flex text-center gap-x-2 items-center justify-center text-blue-600 w-full  cursor-pointer rounded border-blue-600 border  px-5 py-2 font-bold ">
                                 Buy Now
                                 <svg
                                     width="24px"
