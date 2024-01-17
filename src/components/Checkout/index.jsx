@@ -1,13 +1,18 @@
 
-
+import { useParams } from "react-router-dom";
+import Navbar from "../Navbar";
+import Footer from "../Footer";
 export default function Checkout() {
+    let { userId } = useParams();
+    // call api to get user cart and calculate the sum of all products price and display in the summary page
     return (
         <div className="">
-            <div className="grid grid-cols-1 md:grid-cols-7">
+            <Navbar />
+            <div className="grid grid-cols-1 md:grid-cols-7 mt-5">
                 <div className="md:col-span-4 p-2 lg:col-span-5 md:pl-16">
                     <div className="p-1 rounded-md">
                         <div className="flex gap-x-6">
-                            <div onClick={() => {}} className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-white mb-5">
+                            <div onClick={() => { }} className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-white mb-5">
 
                                 <svg
                                     width="24px"
@@ -127,6 +132,10 @@ export default function Checkout() {
                     </div>
                 </div>
             </div>
+            <div className="mt-5">
+                <Footer />
+            </div>
+
         </div>
 
     )

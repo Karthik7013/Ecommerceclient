@@ -1,7 +1,7 @@
 import axios from "axios";
 import logo from "./online-shopping.png";
 import { useParams, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 
@@ -14,19 +14,17 @@ export default function Login() {
     password: ""
   })
 
-  let [register,setRegister] = useState({
-    name:"karthik",
-    phno:"7013140693",
-    password:"1234",
-    email:"karthiktumala143@gmail.com"
+  let [register, setRegister] = useState({
+    name: "",
+    phno: "",
+    password: "",
+    email: ""
   })
 
   async function login(loginCred) {
     setLoging(true)
-
     try {
       let res = await axios.post('https://myshopee-ba54.onrender.com/user/login', loginCred);
-
       if (res.status === 200) {
         if (res.data.status) {
           navigate('/')
@@ -41,10 +39,19 @@ export default function Login() {
   }
 
 
-  async function registerUser(){
-let res = await axios.post('https://myshopee-ba54.onrender.com/user/register',register);
-console.log(res.status);
+  async function registerUser(register) {
+    try {
+      setLoging(true);
+      let res = await axios.post('https://myshopee-ba54.onrender.com/user/register', register);
+      if (res.status === 200) {
+        navigate('/');
+      } else {
 
+      }
+    } catch (error) {
+      setLoging(false);
+      alert("already email taken !")
+    }
   }
 
 
@@ -58,15 +65,32 @@ console.log(res.status);
       setLoginCred((prev) => {
         return { ...prev, password: e.target.value }
       })
+    } else if (e.target.name === "reg_name") {
+      setRegister((prev) => {
+        return { ...prev, name: e.target.value }
+      })
+    } else if (e.target.name === 'reg_number') {
+      setRegister((prev) => {
+        return { ...prev, phno: e.target.value }
+      })
+    } else if (e.target.name === 'reg_email') {
+      setRegister((prev) => {
+        return { ...prev, email: e.target.value }
+      })
+    }
+    else if (e.target.name === "reg_psw") {
+      setRegister((prev) => {
+        return { ...prev, password: e.target.value }
+      })
     }
   }
 
-let x = {
-  backgroundColor: "#8EC5FC",
-  backgroundImage: "linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
-}
+  let x = {
+    backgroundColor: "#8EC5FC",
+    backgroundImage: "linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
+  }
 
-  return <div className="px-4 pt-2" style={x}>
+  return <div className="p-2 h-screen" style={x}>
     {action.signin === 'signin' ? <div>
       <div className="max-w-md m-auto rounded-xl p-6 shadow-lg bg-white">
         <div className="m-auto rounded mt-10 w-16 h-16"><img src={logo} alt="" /></div>
@@ -293,29 +317,29 @@ let x = {
           <label htmlFor="" className="text-gray-600 font-semibold">
             Name
           </label>
-          <input type="text" className="transition-colors w-full rounded-md h-10 border indent-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+          <input onChange={(e) => { handleChange(e) }} value={register.name} name="reg_name" type="text" className="transition-colors w-full rounded-md h-10 border indent-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
         </div>
         <div className="mt-4">
           <label htmlFor="" className="text-gray-600 font-semibold">
             Mobile Number
           </label>
-          <input type="number" className="transition-colors w-full rounded-md h-10 border indent-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+          <input onChange={(e) => { handleChange(e) }} value={register.phno} name="reg_number" type="number" className="transition-colors w-full rounded-md h-10 border indent-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
         </div>
         <div className="mt-4">
           <label htmlFor="" className="text-gray-600 font-semibold">
             Email
           </label>
-          <input type="email" required className="transition-colors w-full rounded-md h-10 border indent-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+          <input onChange={(e) => { handleChange(e) }} value={register.email} name="reg_email" type="email" required className="transition-colors w-full rounded-md h-10 border indent-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
         </div>
         <div className="mt-4">
           <label className="text-gray-600 font-semibold" htmlFor="">
             Password
           </label>
-          <input type="text" className="transition-colors w-full rounded-md h-10 border indent-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
+          <input value={register.password} onChange={(e) => { handleChange(e) }} name="reg_psw" type="password" className="transition-colors w-full rounded-md h-10 border indent-2 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" />
         </div>
 
         <div className="mt-6">
-          <button onClick={()=>{registerUser()}} className="bg-blue-500 w-full rounded-md text-white font-bold py-2">
+          <button onClick={() => { registerUser(register) }} className="bg-blue-500 w-full rounded-md text-white font-bold py-2">
             Create Account
           </button>
         </div>

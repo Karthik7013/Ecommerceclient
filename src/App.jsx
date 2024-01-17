@@ -5,11 +5,8 @@ import Collection from "./components/Collection";
 import ProductDetails from "./components/ProductDetails";
 import SignIn from "./components/SignIn";
 import Checkout from "./components/Checkout";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
-import "swiper/css";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import "swiper/css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -19,7 +16,7 @@ export const App = () => {
     return (
       <>
         <Navbar />
-        <Swiper slidesPerView={1}>
+        {/* <Swiper slidesPerView={1}>
           <SwiperSlide>
             {" "}
             <img
@@ -51,7 +48,7 @@ export const App = () => {
               alt=""
             />
           </SwiperSlide>
-        </Swiper>
+        </Swiper> */}
         <section className="px-5 md:px-16 m-auto">
           <div className="mt-5 ">
             <TopDeals />
@@ -60,9 +57,7 @@ export const App = () => {
             <Collection />
           </div>
         </section>
-        <div className="mt-16">
-          <Footer />
-        </div>
+
       </>
     );
   };
@@ -73,11 +68,7 @@ export const App = () => {
         <Routes>
           <Route path="/:signin" element={<SignIn />} />
           <Route path="/" element={<Home />} />
-          <Route path="/checkout" element={<Checkout />} />
-
-          {/* <Route path="/orders" element={<>orders</>} />
-          <Route path="/whish-list" element={<>whishlist</>} />
-          <Route path="/settings" element={<>settings</>} /> */}
+          <Route path="/checkout/:userId" element={<Checkout />} />
           <Route path="/product-details/:id" element={<ProductDetails />} />
         </Routes>
       </Router>
