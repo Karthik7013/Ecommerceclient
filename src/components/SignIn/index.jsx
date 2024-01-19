@@ -2,12 +2,14 @@ import axios from "axios";
 import logo from "./online-shopping.png";
 import { useParams, useNavigate } from "react-router-dom"
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 
 
 export default function Login() {
   let action = useParams();
   let navigate = useNavigate();
+  let dispatch = useDispatch();
   let [loging, setLoging] = useState(false)
   let [loginCred, setLoginCred] = useState({
     email: "",
@@ -27,6 +29,7 @@ export default function Login() {
       let res = await axios.post('https://myshopee-ba54.onrender.com/user/login', loginCred);
       if (res.status === 200) {
         if (res.data.status) {
+          dispatch({ type: 'HANDLE_USER_DATA', payload: "1234567890" })
           navigate('/')
         } else {
         }
@@ -44,6 +47,7 @@ export default function Login() {
       setLoging(true);
       let res = await axios.post('https://myshopee-ba54.onrender.com/user/register', register);
       if (res.status === 200) {
+        console.log(res.data)
         navigate('/');
       } else {
 
@@ -90,7 +94,7 @@ export default function Login() {
     backgroundImage: "linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)"
   }
 
-  return <div className="p-2 h-screen" style={x}>
+  return <div className="p-2 h-screen overflow-y-scroll" style={x}>
     {action.signin === 'signin' ? <div>
       <div className="max-w-md m-auto rounded-xl p-6 shadow-lg bg-white">
         <div className="m-auto rounded mt-10 w-16 h-16"><img src={logo} alt="" /></div>

@@ -5,14 +5,20 @@ import Collection from "./components/Collection";
 import ProductDetails from "./components/ProductDetails";
 import SignIn from "./components/SignIn";
 import Checkout from "./components/Checkout";
+import Profile from "./components/Profile";
 // import { Swiper, SwiperSlide } from "swiper/react";
 // import "swiper/css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import store from "./redux/store";
 
 export const App = () => {
+
+
+
   const Home = () => {
+    let data = useSelector(e=>e);
+    console.log(data)
     return (
       <>
         <Navbar />
@@ -57,6 +63,8 @@ export const App = () => {
             <Collection />
           </div>
         </section>
+        <Footer />
+
 
       </>
     );
@@ -66,6 +74,7 @@ export const App = () => {
     <Provider store={store}>
       <Router>
         <Routes>
+          <Route path="/profile" element={<Profile />}/>
           <Route path="/:signin" element={<SignIn />} />
           <Route path="/" element={<Home />} />
           <Route path="/checkout/:userId" element={<Checkout />} />
