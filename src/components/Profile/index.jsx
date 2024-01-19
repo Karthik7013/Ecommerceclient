@@ -8,7 +8,7 @@ const Profile = () => {
       <div className="border rounded-2xl p-2 bg-white shadow-lg">
         <div className="max-h-[120px] md:max-h-[200px] overflow-hidden rounded-xl">
           <img
-            className=""
+            className=" "
             src="https://4kwallpapers.com/images/walls/thumbs_3t/1455.jpg"
             alt=""
           />
