@@ -3,10 +3,16 @@ import logo from "./online-shopping.png";
 import { useParams, useNavigate } from "react-router-dom"
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Login() {
+
+  const notifyError = () => {
+    toast.error("Wrong Password !")
+  }
+
   let action = useParams();
   let navigate = useNavigate();
   let dispatch = useDispatch();
@@ -29,16 +35,21 @@ export default function Login() {
       let res = await axios.post('https://myshopee-ba54.onrender.com/user/login', loginCred);
       if (res.status === 200) {
         if (res.data.status) {
-          dispatch({ type: 'HANDLE_USER_DATA', payload: "1234567890" })
+          dispatch({ type: 'HANDLE_USER_DATA', payload: res.data.userId });
+          dispatch({type:'HANDLE_USER_LOGIN',payload:true})
+          dispatch({type:'HANDLE_USER_NAME',payload: res.data.userName})
           navigate('/')
         } else {
+          notifyError()
         }
       } else {
-        alert("wrong credentials !")
+        setLoging(false);
+        notifyError()
       }
     } catch (error) {
-      setLoging(false);
+        notifyError()
     }
+    setLoging(false);
   }
 
 
@@ -47,14 +58,13 @@ export default function Login() {
       setLoging(true);
       let res = await axios.post('https://myshopee-ba54.onrender.com/user/register', register);
       if (res.status === 200) {
-        console.log(res.data)
         navigate('/');
       } else {
-
+        notifyError();
       }
     } catch (error) {
+      notifyError()
       setLoging(false);
-      alert("already email taken !")
     }
   }
 
@@ -95,6 +105,16 @@ export default function Login() {
   }
 
   return <div className="p-2 h-screen overflow-y-scroll" style={x}>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      theme="light"
+    />
+
     {action.signin === 'signin' ? <div>
       <div className="max-w-md m-auto rounded-xl p-6 shadow-lg bg-white">
         <div className="m-auto rounded mt-10 w-16 h-16"><img src={logo} alt="" /></div>
@@ -522,6 +542,7 @@ export default function Login() {
       </div>
     </div>}
     {loging ? <div className="flex items-center justify-center absolute top-0 left-0 h-screen w-screen bg-[#000000ad]">
+
       <div className="loader"></div>
     </div> : ""}
   </div>

@@ -1,6 +1,10 @@
 import React from 'react';
-
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 const Profile = () => {
+  console.log(useParams())
+  let data = useSelector(e=>e);
+  console.log(data);
   return (
 <div className="bg-gray-100 py-1 md:py-5 px-2 md:px-16">
   <div className="grid md:grid-cols-12">
@@ -24,7 +28,7 @@ const Profile = () => {
         </div>
         <div className="px-10 mt-2 grid grid-cols-2">
           <div>
-            <h1 className="font-bold text-3xl text-gray-800">Hi Karthik !</h1>
+            <h1 className="font-bold text-3xl text-gray-800">Hi {data.userName} !</h1>
             <div className="flex items-center gap-x-1 mt-2">
               <svg
                 width="16px"

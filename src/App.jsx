@@ -11,17 +11,41 @@ import Profile from "./components/Profile";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider, useSelector } from "react-redux";
 import store from "./redux/store";
+import { useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import PageNotFound from "./components/PageNotFound"
+
 
 export const App = () => {
 
-
-
   const Home = () => {
-    let data = useSelector(e=>e);
-    console.log(data)
+    let userStatus = useSelector(e=>e);
+
+
+    const notifySuccess = () => {
+      toast.success(`Welcome Back ${userStatus.userName} !`)
+    }
+
+    useEffect(()=>{
+      if(userStatus.login){
+        notifySuccess()
+      }
+    },[])
+ 
     return (
       <>
         <Navbar />
+        <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              theme="light"
+        
+        />
         {/* <Swiper slidesPerView={1}>
           <SwiperSlide>
             {" "}
@@ -74,11 +98,12 @@ export const App = () => {
     <Provider store={store}>
       <Router>
         <Routes>
-          <Route path="/profile" element={<Profile />}/>
-          <Route path="/:signin" element={<SignIn />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/checkout/:userId" element={<Checkout />} />
-          <Route path="/product-details/:id" element={<ProductDetails />} />
+          <Route exact path="/profile/:id" element={<Profile />}/>
+          <Route exact path="/:signin" element={<SignIn />} />
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/checkout/:userId" element={<Checkout />} />
+          <Route exact path="/product-details/:id" element={<ProductDetails />} />
+          <Route exact path="*" element={<PageNotFound />}/>
         </Routes>
       </Router>
     </Provider>
