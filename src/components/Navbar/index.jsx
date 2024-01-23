@@ -15,14 +15,14 @@ export default function Navbar() {
 
     function handleUserLogin() {
         if (user.login) {
-            setUserPanel((prev)=>!prev)
+            setUserPanel((prev) => !prev)
         } else {
             navigate('/signin')
         }
     }
 
     return (
-        <div className="relative bg-[#2b6cb0] px-2 text-white sm:px-6 xl:px-0">
+        <div className="sticky z-50 top-0 bg-[#2b6cb0] px-2 text-white sm:px-6 xl:px-0">
             <div className="mx-auto flex max-w-6xl items-center justify-between py-2 md:py-4">
                 <div className="flex gap-2 uppercase">
                     <div onClick={() => { setSideNavbar(false) }} className="h-8 w-8 cursor-pointer rounded-md bg-blue-100 bg-transparent p-1 sm:hidden">
@@ -82,22 +82,22 @@ export default function Navbar() {
                             </g>
                         </svg>
                     </div>
-                    <div title={user.login ? "Sign In" : ""} onClick ={handleUserLogin} className=" h-8 w-8 cursor-pointer overflow-hidden rounded-full transition-all hover:bg-gray-200 hover:p-0.5">
-                        {user.login ? 
-                        <img className="rounded-full" src="https://i.pravatar.cc/300" alt="" /> : 
-                        <div className="bg-yellow-500 h-full w-full flex justify-center items-center">
-                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
-                        </div>}
-                      
+                    <div title={user.login ? "Sign In" : ""} onClick={handleUserLogin} className=" h-8 w-8 cursor-pointer overflow-hidden rounded-full transition-all hover:bg-gray-200 hover:p-0.5">
+                        {user.login ?
+                            <img className="rounded-full" src="https://i.pravatar.cc/300" alt="" /> :
+                            <div className="bg-yellow-500 h-full w-full flex justify-center items-center">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+                            </div>}
+
                     </div>
-                    {userPanel? <div className="absolute top-10 w-[160px] right-0 p-1 text-gray-600 bg-gray-100 rounded-md">
+                    {userPanel ? <div className="absolute top-10 w-[160px] right-0 p-1 text-gray-600 bg-gray-100 rounded-md">
                         <ul className="space-y-1 text-sm text-gray-900">
                             <li className="border-b pl-3 hover:bg-blue-400 p-1 hover:text-white rounded cursor-pointer">My Order</li>
                             <li className="border-b pl-3 hover:bg-blue-400 p-1 hover:text-white rounded cursor-pointer">Favourites</li>
-                            <li className="border-b pl-3 hover:bg-blue-400 p-1 hover:text-white rounded cursor-pointer" onClick={()=>{  navigate('/profile/12345')}}>Profile</li>
+                            <li className="border-b pl-3 hover:bg-blue-400 p-1 hover:text-white rounded cursor-pointer" onClick={() => { navigate('/profile/12345') }}>Profile</li>
                             <li className="pl-3 hover:bg-blue-400 p-1 hover:text-white rounded cursor-pointer">Settings</li>
                         </ul>
-                    </div>:"" }
+                    </div> : ""}
                 </div>
             </div>
             <SideNavbar sideNavbar={sideNavbar} setSideNavbar={setSideNavbar} />

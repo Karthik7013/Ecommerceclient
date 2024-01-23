@@ -40,7 +40,7 @@ export default function Checkout() {
                             </div>
                             <p className="text-2xl font-bold">Shopping Cart (3 items)</p></div>
                         <ul className="mt-10 flex flex-col gap-5">
-                            <li className="grid grid-cols-1 lg:grid-cols-2 p-5 shadow rounded-md gap-5">
+                            <li className="grid grid-cols-1 lg:grid-cols-2 p-5 shadow rounded-md gap-5 bg-[#FAF8F1]">
                                 <div className="flex gap-10 items-center">
                                     <div className="w-16 h-16 md:w-24 md:h-24 overflow-hidden rounded-md">
                                         <img
